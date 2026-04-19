@@ -1,17 +1,17 @@
 <div align="center">
 
-# 🎯 WitMotion Sensor Toolkit
+# 🏀 投篮姿态检测系统
 
-**维特智能（WitMotion）陀螺仪传感器 Python SDK & ESP32 固件**
+**基于 JY931 陀螺仪的投篮姿势实时监测与纠正系统**
 
 <p>
   <img src="https://img.shields.io/badge/Python-3.6+-blue?logo=python" alt="Python 3.6+">
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20ESP32-green" alt="Platform">
-  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
+  <img src="https://img.shields.io/badge/Sensor-JY931-orange" alt="JY931">
 </p>
 
 <p>
-  <b>支持 JY901S / JY931 / WT901C485 等 6/9 轴倾角传感器</b>
+  <b>维特智能 6/9 轴倾角传感器 · 实时姿态可视化 · ESP32 无线网关</b>
 </p>
 
 </div>
@@ -40,20 +40,20 @@
 <tr>
 <td width="50%">
 
-### 🐍 Python 部分
-- 串口通信 SDK（维特协议 + RS485/Modbus）
-- JY931 3D 姿态可视化
-- 投篮姿势纠正系统
-- 原始数据诊断工具
+### 🏀 核心功能
+- **姿态检测** — 实时监测 Roll / Pitch 角度
+- **阈值纠正** — ±15° 可调阈值触发震动反馈
+- **四向震动** — 上/下/左/右方向可视化纠正
+- **统计面板** — 正确率、纠正次数实时统计
 
 </td>
 <td width="50%">
 
-### 📡 ESP32 部分
-- WiFi 热点 + Web 服务器
-- 实时欧拉角展示
-- 响应式 Web 页面
-- 零配置即用
+### 📡 扩展功能
+- **3D 可视化** — 实时姿态立方体 + 历史曲线
+- **ESP32 网关** — WiFi 热点 + Web 页面展示
+- **SDK 支持** — 维特协议 + RS485/Modbus
+- **诊断工具** — 原始数据帧分析
 
 </td>
 </tr>
@@ -78,8 +78,8 @@
 │   ├── 📄 JY901S.py                     # JY901S 基础示例
 │   ├── 📄 WT901C485.py                  # RS485 传感器示例
 │   ├── 📄 test_jy931.py                 # JY931 测试脚本
-│   ├── 📄 jy931_visualizer.py           # 3D 可视化程序 ⭐
-│   ├── 📄 shooting_posture_corrector.py # 投篮姿势纠正 ⭐
+│   ├── 📄 shooting_posture_corrector.py # 投篮姿态检测系统 ⭐
+│   ├── 📄 jy931_visualizer.py           # 3D 可视化程序
 │   ├── 📄 diagnose.py                   # 数据诊断工具
 │   └── 📄 test_raw.py                   # 原始数据测试
 │
@@ -108,11 +108,11 @@ cd Python-WitProtocol/chs
 # 基础数据读取
 python JY901S.py
 
-# 3D 可视化（推荐）
-python jy931_visualizer.py
-
-# 投篮姿势纠正系统
+# 投篮姿态检测系统（主程序）
 python shooting_posture_corrector.py
+
+# 3D 可视化
+python jy931_visualizer.py
 ```
 
 ---
@@ -156,16 +156,19 @@ device.closeDevice()
 | 帧率统计 | 实时帧率 + 平均帧率 + 帧类型计数 |
 | 历史曲线 | 三轴角度变化趋势图 |
 
-#### 🏀 投篮姿势纠正系统 — `shooting_posture_corrector.py`
+#### 🏀 投篮姿态检测系统 — `shooting_posture_corrector.py`
+
+本项目核心应用，基于 JY931 陀螺仪的投篮姿势实时监测与纠正：
 
 <div align="center">
 
-| 功能 | 描述 |
-|:-----|:-----|
-| 姿态检测 | 实时监测 Roll / Pitch 角度 |
-| 阈值纠正 | ±15° 可调阈值触发震动 |
-| 四向震动 | 上/下/左/右方向可视化 |
-| 统计面板 | 正确率、纠正次数统计 |
+| 功能模块 | 说明 |
+|:---------|:-----|
+| **手臂姿态可视化** | 俯视图显示 Roll/Pitch 偏离点、方向箭头、阈值圆环 |
+| **震动模块状态** | 上/下/左/右四方向震动可视化，偏离时高亮提示 |
+| **阈值设置** | 可调整偏离阈值（默认 ±15°），适应不同训练需求 |
+| **统计面板** | 正确姿势次数、纠正触发次数、姿势正确率实时统计 |
+| **历史曲线** | Roll/Pitch 角度变化趋势图，支持 300 点历史记录 |
 
 </div>
 
